@@ -2,6 +2,8 @@
   <%= flash[:notice] %>
 </div>
 
+
+
 <div class='container'>
   <div class='row'>
     <div class='col-md-3'>
@@ -11,6 +13,7 @@
       <%= render 'form', book: @book, book_new: @book_new%>
     </div>
     <div class='col-md-8 offset-md-1'>
+
   		<h2>Book detail</h2>
   		<table class='table'>
   		  <tr>
@@ -22,7 +25,37 @@
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
 
+          <td>
+          <% if @book.favorited_by?(current_user) %>
+            <p>
+              <%= link_to book_favorite_path(@book), method: :delete do %>
+               ♥<%= @book.favorites.count %>
+              <% end %>
+            </p>
+          <% else %>
+            <p>
+              <%= link_to book_favorite_path(@book), method: :post do %>
+                ♡<%= @book.favorites.count %>
+              <% end %>
+            </p>
+          <% end %>
+         </td>
 
+         <td>
+           <p>コメント数：<%= @book.book_comments.count %></p>
+           <% @book.book_comments.each do |book_comment| %>
+           <%= book_comment.comment %>
+           <% if book_comment.user == current_user %>
+             <%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete, data: { confirm: "削除しますか？"} %>
+           <% end %>
+           <% end %>
+         </td>
+         <td>
+           <%= form_with model: [@book, @book_comment] do |f| %>
+           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+           <%= f.submit "送信" %>
+           <% end %>
+         </td>
             <td>
               <% if @book.user == current_user %>
                 <%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %>
@@ -38,4 +71,4 @@
       </table>
     </div>
   </div>
-</div>
+ </div>
