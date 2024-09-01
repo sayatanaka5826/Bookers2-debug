@@ -12,8 +12,8 @@ before_action :authenticate_user!
   end
 
   def index
-     @users = User.looks(params[:search], params[:word])
-     @books = Book.looks(params[:search], [:word])
+    @users = User.looks(params[:search], params[:word])
+    @books = Book.looks(params[:search], [:word])
   end
 
 end
