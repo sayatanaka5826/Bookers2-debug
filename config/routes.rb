@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   root :to =>"homes#top"
   get "home/about"=>"homes#about"
-  get "search" => "searches#search"
+  # get "search" => "searches#search ←アクション名をsearchにする場合"
 
   resources :searches, only: [:index]
 
