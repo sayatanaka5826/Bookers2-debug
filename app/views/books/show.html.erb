@@ -24,11 +24,11 @@
           <td><%= @book.body %></td>
 
           <td class="favorite_buttons_<%= @book.id %>">
-            <%= render 'favorites/favorite', book: @book%>
+            <%= render 'favorites/favorite', book: @book %>
           </td>
 
-          <td>
-            <p>コメント数：<%= @book.book_comments.count %></p>
+          <td id="comment_counter">
+            <%= render 'book_comments/counter', book: @book %>
           </td>
           <td>
             <% if @book.user == current_user %>
@@ -44,17 +44,12 @@
         </tr>
       </table>
 
-      <div>
-        <%= render 'books/comment', book: @book%>
+      <div id="comment_index">
+        <%= render 'book_comments/index', book: @book%>
       </div>
 
       <div>
-        <%= form_with model: [@book, @book_comment] do |f| %>
-        <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに"  %>
-        <div>
-        <%= f.submit "送信" %>
-        </div>
-        <% end %>
+        <%= render 'book_comments/form', book: @book, book_comment: @book_comment %>
       </div>
     </div>
   </div>
