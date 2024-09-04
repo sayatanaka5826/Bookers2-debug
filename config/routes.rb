@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   get "home/about"=>"homes#about"
   # get "search" => "searches#search ←アクション名をsearchにする場合"
 
-  resources :searches, only: [:index]
-
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
     resource :favorites, only: [:create, :destroy]
     resources :book_comments, only: [:create, :destroy]
@@ -17,6 +15,11 @@ Rails.application.routes.draw do
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
   end
+  
+  resources :searches, only: [:index]
+  
+  resources :rooms, only: [:create, :show]
+  resources :messages, only: [:create]
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
